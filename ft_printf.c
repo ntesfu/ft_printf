@@ -1,8 +1,6 @@
-#include <stdarg.h>
-#include "libft.h"
-#include <stdio.h>
+#include "libftprintf.h"
 
-/*initializes the flags to 0: flags= -,0,#, ,+,width,precision*/
+/*initializes the flags to 0: flags= -,0,.,#, ,+,width,precision*/
 void	flag_initialize(int flag[])
 {
 	int i;
@@ -19,50 +17,64 @@ int indexof(char *str, char c)
     i = 0;
     while (str[i])
     {
-        if (c = str[i])
+        if (c == str[i])
             return (i);
+		i++;
     }
     return (-1);
 }
 
-/*reads flags if present: flags= -,0,#, ,+,width,precision*/
+void printflags(int flag_arr[], char *flag)
+{
+	int i;
+	i = 0;
+	while (i < 6)
+	{
+		printf("%c: %d\n", flag[i], flag_arr[i]);
+		i++;
+	}
+	printf("width: %d\n", flag_arr[6]);
+	printf("precn: %d\n", flag_arr[7]);
+}
+
+/*reads flags if present: flags= -,0,.,#, ,+,width,precision*/
 int flag_format(char *str, int *pos, int flag_arr[])
 {
-	int		len;
 	char	*flags;
     int		val;
 
 	flags = "-0.# +";
-	len = 0;
 	val = 6;
 	(*pos)++;
     while (str[*pos] && indexof(flags, str[*pos]) != -1 || ft_isdigit(str[*pos]))
     {
-        flag_arr[indexof(str[*pos])]++;
-        if (ft_isdigit(str[*pos]))
+        flag_arr[indexof(flags, str[*pos])]++;
+       	if(str[*pos] == '.' || str[*pos] == '0')
 		{
-			if(str[*pos] == '.')
-            	val = 7;
+            if (str[*pos] == '.')
+				val = 7;
+			else
+				val = 6;
         	while (ft_isdigit(str[++(*pos)]))
-        	flag_arr[val] = flag_arr[val]*10 + str[*pos] - 48 + (0 * len++);
-        	len++;
-			continue;
-		}		
+        		flag_arr[val] = flag_arr[val]*10 + str[*pos] - 48;
+			continue;	
+		}
         (*pos)++;
     }
-    return (len);
+	//printflags(flag_arr, flags);
+    return (1);
 }
 
 int	va_arg_specifier(char s, va_list args, int flag[])
 {
 	int	len;
-
+	//printf("\n**Oarg: %c:**\n", s);
 	if (s == 'c')
-		len = printf("%c", va_arg(args, char));
+		len = print_char(va_arg(args, int), flag);
 	else if (s == 's')
 		len = printf("%s", va_arg(args, char *));
 	else if (s == 'p')
-		len = printf("%p", va_arg(args, unsigned long long int));
+		len = printf("%p", va_arg(args, void *));
 	else if (s == 'd')
 		len = printf("%d", va_arg(args, int));
 	else if (s == 'i')
@@ -90,14 +102,17 @@ int ft_printf(const char *str, ...)
 
     pos = 0;
     len = 0;
-    flag_initialize(flag)
+    flag_initialize(flag);
     va_start(args, str);
     while (str[pos])
     {
         if (str[pos] == '%')
         {
-            len += flag_format(str, &pos);
+			//printf("\n**O/P: %s:%d**\n", &str[pos], len);
+            len += flag_format((char *)str, &pos, flag);
+			//printf("\n**O/P: %s:%d**\n", &str[pos], len);
             len += va_arg_specifier(str[pos], args, flag);
+			//printf("\n**O/P: %s:%d**\n", &str[pos], len);
         }
         else
         {
@@ -106,4 +121,5 @@ int ft_printf(const char *str, ...)
         }
 		pos++;
     }
+	return (len);
 }
