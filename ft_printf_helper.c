@@ -50,13 +50,13 @@ int	print_pointer(unsigned long long ptr, int flags[])
 		clone = (clone / 16) + (0 * len++);
 	if (flags[0])
 	{
-		print_unsigned_num_recursive(16, base, ptr, 0);
+		print_unsgn_num_recurse(16, base, ptr, 0);
 		print_space(&len, flags[6], ' ');
 	}
 	else
 	{
 		print_space(&len, flags[6], ' ');
-		print_unsigned_num_recursive(16, base, ptr, 0);
+		print_unsgn_num_recurse(16, base, ptr, 0);
 	}
 	return (len);
 }
@@ -74,7 +74,7 @@ void	print_unsgn_rgt_jstf(int *p_dgt, int nm, t_unsgn_dt *data, int flags[])
 		ft_putstr_fd((char *)data->sgn, 1);
 	}
 	print_space(p_dgt, flags[7], '0');
-	print_unsgn_int_num_recursive(data->base_n, data->base, nm, flags[2]);
+	print_unsgn_int_num_recurse(data->base_n, data->base, nm, flags[2]);
 }
 
 /*prints %u, %x and %X: concerned flags: -,0,#,.
@@ -97,11 +97,11 @@ int	print_unsigned_int_helper(unsigned int num, t_unsgn_dt *data, int flags[])
 	{
 		ft_putstr_fd(data->sgn, 1);
 		print_space(&p_digits, flags[7], '0');
-		print_unsgn_int_num_recursive(data->base_n, data->base, num, flags[2]);
+		print_unsgn_int_num_recurse(data->base_n, data->base, num, flags[2]);
 		print_space(&data->len, flags[6], ' ');
 	}
 	else
-		print_unsgn_rgt_jstf(p_digits, num, data, flags);
+		print_unsgn_rgt_jstf(&p_digits, num, data, flags);
 	return (data->len);
 }
 
@@ -127,7 +127,7 @@ int	print_unsigned_int(unsigned int num, int flags[], int base_n, int cap)
 	}
 	if (cap)
 		ft_strcapitalize(data->base);
-	data->len += ft_numlen(num, data->base_n);
+	data->len += ft_unsgn_numlen(num, data->base_n);
 	print_unsigned_int_helper(num, data, flags);
 	len = data->len;
 	free(data->base);

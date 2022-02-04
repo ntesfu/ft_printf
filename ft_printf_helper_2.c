@@ -14,25 +14,24 @@
 
 void	print_str_helper(int precision, int p_flag, char *str)
 {
-    int len;
+	int	len;
 
-    len = ft_min(precision, ft_strlen(str));
+	len = ft_min(precision, ft_strlen(str));
 	if (p_flag)
 		write(1, str, len);
 	else
-		ft_putstr_fd(str, 1);	
+		ft_putstr_fd(str, 1);
 }
 
 /*prints string: concerning flags: -, . & width*/
 int	print_string(char *str, int flags[])
 {
-	int	    precision;
-	int	    len;
+	int	precision;
+	int	len;
 
-    precision = 0;
-    if (str == NULL)
-       return (print_string("(null)", flags));
-
+	precision = 0;
+	if (str == NULL)
+		return (print_string("(null)", flags));
 	if (flags[2] > 0)
 	{
 		precision = 1;
@@ -50,12 +49,10 @@ int	print_string(char *str, int flags[])
 		print_space(&len, flags[6], ' ');
 		print_str_helper(flags[7], precision, str);
 	}
-	//ft_putstr_fd(str, 1);
 	return (len);
-
 }
 
-void	print_sgn_right_justified(int *len, int *p_digits, char *sgn, int flags[])
+void	print_sgn_right_jstfd(int *len, int *p_digits, char *sgn, int flags[])
 {
 	if (flags[1] && !flags[2])
 	{
@@ -63,10 +60,11 @@ void	print_sgn_right_justified(int *len, int *p_digits, char *sgn, int flags[])
 		print_space(len, flags[6], '0');
 	}
 	else
-	{	print_space(len, flags[6], ' ');
+	{	
+		print_space(len, flags[6], ' ');
 		ft_putstr_fd(sgn, 1);
 	}
-	print_space(p_digits, flags[7], '0');		
+	print_space(p_digits, flags[7], '0');
 }
 
 /*flags= -,0,.,#, ,+,width,precision*/
@@ -93,7 +91,7 @@ int	print_signed_int_helper(long rev, int *len, char *sgn, int flags[])
 	}
 	else
 	{
-		print_sgn_right_justified(len, &p_digits, sgn, flags);
+		print_sgn_right_jstfd(len, &p_digits, sgn, flags);
 		print_signed_num_recursive(rev, flags[2]);
 	}
 	return (*len);
@@ -113,7 +111,7 @@ int	print_signed_int(int num, int flags[])
 		rev = (long)num * -1;
 	else
 		rev = (long)num;
-    val = rev;
+	val = rev;
 	while (val)
 		val = val / 10 + (0 * len++);
 	if (flags[4] && !flags[5] && num >= 0)
@@ -124,6 +122,5 @@ int	print_signed_int(int num, int flags[])
 		sgn = "-" + (0 * len++);
 	else
 		sgn = "";
-    //printf("\n:%d:\n", len);
 	return (print_signed_int_helper(rev, &len, sgn, flags));
 }

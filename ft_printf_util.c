@@ -12,28 +12,6 @@
 
 #include "libftprintf.h"
 
-int ft_min(int x, int y)
-{
-    if (x < y)
-        return (x);
-    else
-        return (y);
-}
-
-int indexof(char *str, char c)
-{
-    int i;
-
-    i = 0;
-    while (str[i])
-    {
-        if (c == str[i])
-            return (i);
-		i++;
-    }
-    return (-1);
-}
-
 void	print_space(int *len, int width, char sp)
 {
 	while (*len < width)
@@ -47,8 +25,8 @@ void	print_rev_number(long rev, int precision)
 {
 	if (precision == 0 && rev == 0)
 	{
-		ft_putchar_fd('0',1);
-		return;
+		ft_putchar_fd('0', 1);
+		return ;
 	}
 	while (rev)
 	{
@@ -61,57 +39,37 @@ void	print_signed_num_recursive(long nbr, int precision)
 {
 	if (precision > 0 && nbr == 0)
 		return ;
-    else if (nbr > (long)9)
-    {
-        print_signed_num_recursive(nbr / 10, 0);
-        ft_putchar_fd(nbr % 10 + '0', 1);
-    }
+	else if (nbr > (long)9)
+	{
+		print_signed_num_recursive(nbr / 10, 0);
+		ft_putchar_fd(nbr % 10 + '0', 1);
+	}
 	else
 		ft_putchar_fd(nbr % 10 + '0', 1);
 }
 
-void    print_unsigned_int_num_recursive(int base_n, char *base, unsigned int nbr, int precision)
+void	print_unsgn_int_num_recurse(int b_n, char *b, unsigned int nb, int p)
 {
-	if (precision > 0 && nbr == 0)
+	if (p > 0 && nb == 0)
 		return ;
-	else if (nbr > (unsigned int)base_n - 1)
+	else if (nb > (unsigned int)b_n - 1)
 	{
-		print_unsigned_num_recursive(base_n, base, nbr / base_n, 0);
-		ft_putchar_fd(base[nbr % base_n], 1);
+		print_unsgn_int_num_recurse(b_n, b, nb / b_n, 0);
+		ft_putchar_fd(b[nb % b_n], 1);
 	}
 	else
-		ft_putchar_fd(base[nbr % base_n], 1);
+		ft_putchar_fd(b[nb % b_n], 1);
 }
 
-void    print_unsigned_num_recursive(int base_n, char *base, unsigned long long nbr, int precision)
+void	print_unsgn_num_recurse(int b_n, char *b, unsigned long long nb, int p)
 {
-	if (precision > 0 && nbr == 0)
+	if (p > 0 && nb == 0)
 		return ;
-	else if (nbr > (unsigned long long)base_n - 1)
+	else if (nb > (unsigned long long)b_n - 1)
 	{
-		print_unsigned_num_recursive(base_n, base, nbr / base_n, 0);
-		ft_putchar_fd(base[nbr % base_n], 1);
+		print_unsgn_num_recurse(b_n, b, nb / b_n, 0);
+		ft_putchar_fd(b[nb % b_n], 1);
 	}
 	else
-		ft_putchar_fd(base[nbr % base_n], 1);
-}
-
-void	ft_strcapitalize(char *str)
-{
-	while (*str)
-	{
-		if (*str >= 'a' && *str <= 'z')
-			*str = *str - ('z' - 'Z');
-		str++;
-	}
-}
-
-int	ft_numlen(unsigned int clone, int base_n)
-{
-	int	len;
-
-	len = 0;
-	while (clone)
-		clone = clone / base_n + (0 * len++);
-	return (len);
+		ft_putchar_fd(b[nb % b_n], 1);
 }
