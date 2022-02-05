@@ -115,11 +115,11 @@ int	print_signed_int(int num, int flags[])
 	while (val)
 		val = val / 10 + (0 * len++);
 	if (flags[4] && !flags[5] && num >= 0)
-		sgn = " " + (0 * len++);
+		sgn = get_sign_char(" ", &len);
 	else if (flags[5] && num >= 0)
-		sgn = "+" + (0 * len++);
+		sgn = get_sign_char("+", &len);
 	else if (num < 0)
-		sgn = "-" + (0 * len++);
+		sgn = get_sign_char("-", &len);
 	else
 		sgn = "";
 	return (print_signed_int_helper(rev, &len, sgn, flags));

@@ -22,18 +22,10 @@ void	flag_initialize(int flag[])
 		flag[i] = 0;
 }
 
-void	printflags(int flag_arr[], char *flag)
+char	*get_sign_char(char *sgn, int *len)
 {
-	int	i;
-
-	i = 0;
-	while (i < 6)
-	{
-		printf("%c: %d\n", flag[i], flag_arr[i]);
-		i++;
-	}
-	printf("width: %d\n", flag_arr[6]);
-	printf("precn: %d\n", flag_arr[7]);
+	(*len)++;
+	return (sgn);
 }
 
 /*reads flags if present: flags= -,0,.,#, ,+,width,precision*/

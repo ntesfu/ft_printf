@@ -37,5 +37,6 @@ void	print_rev_number(long rev, int precision);
 void	print_unsgn_num_recurse(int b_n, char *b, unsigned long long nb, int p);
 void	print_unsgn_int_num_recurse(int b_n, char *b, unsigned int nbr, int p);
 void	print_signed_num_recursive(long nbr, int precision);
+char	*get_sign_char(char *sgn, int *len);
 
 #endif

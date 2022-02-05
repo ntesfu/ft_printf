@@ -42,20 +42,21 @@ int	print_pointer(unsigned long long ptr, int flags[])
 	len = 0;
 	clone = ptr;
 	base = "0123456789abcdef";
-	if (ptr == 0)
-		return (print_string("(nil)", flags));
-	ft_putstr_fd("0x", 1);
 	len += 2;
+	if (clone == 0)
+		len++;
 	while (clone)
 		clone = (clone / 16) + (0 * len++);
 	if (flags[0])
 	{
+		ft_putstr_fd("0x", 1);
 		print_unsgn_num_recurse(16, base, ptr, 0);
 		print_space(&len, flags[6], ' ');
 	}
 	else
 	{
 		print_space(&len, flags[6], ' ');
+		ft_putstr_fd("0x", 1);
 		print_unsgn_num_recurse(16, base, ptr, 0);
 	}
 	return (len);
