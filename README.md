@@ -20,7 +20,6 @@ For this project, the goal was to recode the funciton **printf()** fron `libc`. 
 
 - 40 Black Hole days added
 - 125/100 (Included Bonus) <br>
-<img src="https://imgur.com/a/QLxOl8R" alt="score" width="200"/>
 
 ## Author
 
