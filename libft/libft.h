@@ -6,7 +6,7 @@
 /*   By: ntesfu <ntesfu@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 16:26:37 by ntesfu            #+#    #+#             */
-/*   Updated: 2022/01/24 18:16:12 by ntesfu           ###   ########.fr       */
+/*   Updated: 2022/01/09 12:26:36 by ntesfu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,9 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+void	ft_strcapitalize(char *str);
+int		ft_unsgn_numlen(unsigned int clone, int base_n);
+int		ft_min(int x, int y);
+int		indexof(char *str, char c);
 
 #endif
